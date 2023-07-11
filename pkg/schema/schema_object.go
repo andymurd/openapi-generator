@@ -45,6 +45,14 @@ func (this *ObjectBase) ObjectTypeName() ObjectTypeName {
 	panic("Missing ObjectTypeName method")
 }
 
+func (this *ObjectBase) SetParent(parent ObjectInterface) {
+	this.parent = parent
+}
+
+func (this *ObjectBase) SetChildren(children []ObjectInterface) {
+	this.children = children
+}
+
 // Get the root schema object.
 func (this *ObjectBase) Root() ObjectInterface {
 	candidate := ObjectInterface(this)

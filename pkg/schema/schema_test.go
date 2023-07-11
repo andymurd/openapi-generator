@@ -3,7 +3,7 @@ package schema
 import (
 	"testing"
 
-	. "github.com/smartystreets/goconvey/convey"
+	"github.com/smartystreets/goconvey/convey"
 )
 
 type TestSchema1 struct {
@@ -23,40 +23,40 @@ func (this *TestSchema2) ObjectTypeName() ObjectTypeName {
 }
 
 func TestSpec(t *testing.T) {
-	Convey("A single schema object", t, func() {
+	convey.Convey("A single schema object", t, func() {
 		out := &ObjectBase{}
 
-		So(out.Root(), ShouldEqual, out)
-		So(len(out.Children()), ShouldEqual, 0)
-		So(len(out.ChildrenByTypeName("test1")), ShouldEqual, 0)
+		convey.So(out.Root(), convey.ShouldEqual, out)
+		convey.So(len(out.Children()), convey.ShouldEqual, 0)
+		convey.So(len(out.ChildrenByTypeName("test1")), convey.ShouldEqual, 0)
 
-		So(out.Parent(), ShouldBeNil)
-		So(len(out.AllParents()), ShouldEqual, 0)
-		So(len(out.AllParentsByTypeName("test1")), ShouldEqual, 0)
-		So(out.NearestParentByTypeName("test1"), ShouldBeNil)
+		convey.So(out.Parent(), convey.ShouldBeNil)
+		convey.So(len(out.AllParents()), convey.ShouldEqual, 0)
+		convey.So(len(out.AllParentsByTypeName("test1")), convey.ShouldEqual, 0)
+		convey.So(out.NearestParentByTypeName("test1"), convey.ShouldBeNil)
 	})
 
-	Convey("A schema object with no parents, one child", t, func() {
+	convey.Convey("A schema object with no parents, one child", t, func() {
 		child := &TestSchema1{}
 		out := &ObjectBase{
 			parent:   nil,
 			children: []ObjectInterface{child},
 		}
 
-		So(out.Root(), ShouldEqual, out)
-		So(len(out.Children()), ShouldEqual, 1)
-		So(out.Children()[0], ShouldEqual, child)
-		So(len(out.ChildrenByTypeName("test1")), ShouldEqual, 1)
-		So(out.ChildrenByTypeName("test1")[0], ShouldEqual, child)
-		So(len(out.ChildrenByTypeName("not-test")), ShouldEqual, 0)
+		convey.So(out.Root(), convey.ShouldEqual, out)
+		convey.So(len(out.Children()), convey.ShouldEqual, 1)
+		convey.So(out.Children()[0], convey.ShouldEqual, child)
+		convey.So(len(out.ChildrenByTypeName("test1")), convey.ShouldEqual, 1)
+		convey.So(out.ChildrenByTypeName("test1")[0], convey.ShouldEqual, child)
+		convey.So(len(out.ChildrenByTypeName("not-test")), convey.ShouldEqual, 0)
 
-		So(out.Parent(), ShouldBeNil)
-		So(len(out.AllParents()), ShouldEqual, 0)
-		So(len(out.AllParentsByTypeName("test1")), ShouldEqual, 0)
-		So(out.NearestParentByTypeName("test1"), ShouldBeNil)
+		convey.So(out.Parent(), convey.ShouldBeNil)
+		convey.So(len(out.AllParents()), convey.ShouldEqual, 0)
+		convey.So(len(out.AllParentsByTypeName("test1")), convey.ShouldEqual, 0)
+		convey.So(out.NearestParentByTypeName("test1"), convey.ShouldBeNil)
 	})
 
-	Convey("A schema object with no parents, two children", t, func() {
+	convey.Convey("A schema object with no parents, two children", t, func() {
 		child1 := &TestSchema1{}
 		child2 := &TestSchema2{}
 		out := &ObjectBase{
@@ -64,41 +64,41 @@ func TestSpec(t *testing.T) {
 			children: []ObjectInterface{child1, child2},
 		}
 
-		So(out.Root(), ShouldEqual, out)
-		So(len(out.Children()), ShouldEqual, 2)
-		So(out.Children()[0], ShouldEqual, child1)
-		So(out.Children()[1], ShouldEqual, child2)
-		So(len(out.ChildrenByTypeName("test1")), ShouldEqual, 1)
-		So(out.ChildrenByTypeName("test1")[0], ShouldEqual, child1)
-		So(len(out.ChildrenByTypeName("test2")), ShouldEqual, 1)
-		So(out.ChildrenByTypeName("test2")[0], ShouldEqual, child2)
-		So(len(out.ChildrenByTypeName("not-test")), ShouldEqual, 0)
+		convey.So(out.Root(), convey.ShouldEqual, out)
+		convey.So(len(out.Children()), convey.ShouldEqual, 2)
+		convey.So(out.Children()[0], convey.ShouldEqual, child1)
+		convey.So(out.Children()[1], convey.ShouldEqual, child2)
+		convey.So(len(out.ChildrenByTypeName("test1")), convey.ShouldEqual, 1)
+		convey.So(out.ChildrenByTypeName("test1")[0], convey.ShouldEqual, child1)
+		convey.So(len(out.ChildrenByTypeName("test2")), convey.ShouldEqual, 1)
+		convey.So(out.ChildrenByTypeName("test2")[0], convey.ShouldEqual, child2)
+		convey.So(len(out.ChildrenByTypeName("not-test")), convey.ShouldEqual, 0)
 
-		So(out.Parent(), ShouldBeNil)
-		So(len(out.AllParents()), ShouldEqual, 0)
-		So(len(out.AllParentsByTypeName("test1")), ShouldEqual, 0)
-		So(out.NearestParentByTypeName("test1"), ShouldBeNil)
+		convey.So(out.Parent(), convey.ShouldBeNil)
+		convey.So(len(out.AllParents()), convey.ShouldEqual, 0)
+		convey.So(len(out.AllParentsByTypeName("test1")), convey.ShouldEqual, 0)
+		convey.So(out.NearestParentByTypeName("test1"), convey.ShouldBeNil)
 	})
 
-	Convey("A schema object with one parent, no children", t, func() {
+	convey.Convey("A schema object with one parent, no children", t, func() {
 		parent := &TestSchema1{}
 		out := &ObjectBase{
 			parent: parent,
 		}
 
-		So(out.Root(), ShouldEqual, parent)
-		So(len(out.Children()), ShouldEqual, 0)
+		convey.So(out.Root(), convey.ShouldEqual, parent)
+		convey.So(len(out.Children()), convey.ShouldEqual, 0)
 
-		So(out.Parent(), ShouldEqual, parent)
-		So(len(out.AllParents()), ShouldEqual, 1)
-		So(out.AllParents()[0], ShouldEqual, parent)
-		So(len(out.AllParentsByTypeName("test1")), ShouldEqual, 1)
-		So(out.AllParentsByTypeName("test1")[0], ShouldEqual, parent)
-		So(len(out.AllParentsByTypeName("not-test")), ShouldEqual, 0)
-		So(out.NearestParentByTypeName("test1"), ShouldEqual, parent)
+		convey.So(out.Parent(), convey.ShouldEqual, parent)
+		convey.So(len(out.AllParents()), convey.ShouldEqual, 1)
+		convey.So(out.AllParents()[0], convey.ShouldEqual, parent)
+		convey.So(len(out.AllParentsByTypeName("test1")), convey.ShouldEqual, 1)
+		convey.So(out.AllParentsByTypeName("test1")[0], convey.ShouldEqual, parent)
+		convey.So(len(out.AllParentsByTypeName("not-test")), convey.ShouldEqual, 0)
+		convey.So(out.NearestParentByTypeName("test1"), convey.ShouldEqual, parent)
 	})
 
-	Convey("A schema object with parent and grandparent, no children", t, func() {
+	convey.Convey("A schema object with parent and grandparent, no children", t, func() {
 		grandparent := &TestSchema2{}
 		parent := &TestSchema1{
 			ObjectBase{
@@ -110,19 +110,19 @@ func TestSpec(t *testing.T) {
 			parent: parent,
 		}
 
-		So(out.Root(), ShouldEqual, grandparent)
-		So(len(out.Children()), ShouldEqual, 0)
+		convey.So(out.Root(), convey.ShouldEqual, grandparent)
+		convey.So(len(out.Children()), convey.ShouldEqual, 0)
 
-		So(out.Parent(), ShouldEqual, parent)
-		So(len(out.AllParents()), ShouldEqual, 2)
-		So(out.AllParents()[0], ShouldEqual, parent)
-		So(out.AllParents()[1], ShouldEqual, grandparent)
-		So(len(out.AllParentsByTypeName("test1")), ShouldEqual, 1)
-		So(out.AllParentsByTypeName("test1")[0], ShouldEqual, parent)
-		So(len(out.AllParentsByTypeName("test2")), ShouldEqual, 1)
-		So(out.AllParentsByTypeName("test2")[0], ShouldEqual, grandparent)
-		So(len(out.AllParentsByTypeName("not-test")), ShouldEqual, 0)
-		So(out.NearestParentByTypeName("test1"), ShouldEqual, parent)
-		So(out.NearestParentByTypeName("test2"), ShouldEqual, grandparent)
+		convey.So(out.Parent(), convey.ShouldEqual, parent)
+		convey.So(len(out.AllParents()), convey.ShouldEqual, 2)
+		convey.So(out.AllParents()[0], convey.ShouldEqual, parent)
+		convey.So(out.AllParents()[1], convey.ShouldEqual, grandparent)
+		convey.So(len(out.AllParentsByTypeName("test1")), convey.ShouldEqual, 1)
+		convey.So(out.AllParentsByTypeName("test1")[0], convey.ShouldEqual, parent)
+		convey.So(len(out.AllParentsByTypeName("test2")), convey.ShouldEqual, 1)
+		convey.So(out.AllParentsByTypeName("test2")[0], convey.ShouldEqual, grandparent)
+		convey.So(len(out.AllParentsByTypeName("not-test")), convey.ShouldEqual, 0)
+		convey.So(out.NearestParentByTypeName("test1"), convey.ShouldEqual, parent)
+		convey.So(out.NearestParentByTypeName("test2"), convey.ShouldEqual, grandparent)
 	})
 }
